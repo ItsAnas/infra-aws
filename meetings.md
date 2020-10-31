@@ -13,18 +13,27 @@ Participants:
 
 ## Qu'est ce qu'on fait ?
 
-Un twitter pour EPITA:
-    - Connexion des utilisateurs
-    - Indication de la majeure de l'utilisateur
-    - Permettre d'envoyer un message
-    - Permettre de repondre a un message
-    - Permettre de liker un message
-    - Avoir un flux qui s'update des messages
+Un twitter pour EPITA permettant aux étudiants de l'école de discuter entre eux:
 
-    Front:
-        - React
-    Back:
-        - Express
+- Connexion des utilisateurs
+- Indication de la promo/majeure de l'utilisateur
+- Permettre d'envoyer un message
+- Permettre de repondre a un message
+- Permettre de liker un message
+- Avoir un flux qui s'update avec les messages
+
+Front:
+
+- React
+
+Back:
+
+- Express
+
+DB:
+
+- MySQL en P2
+- MongoDB en P3
 
 Utiliser Cloud Formation pour deployer, que ce soit en plateforme 2 ou 3.
 
@@ -32,19 +41,33 @@ Utiliser Cloud Formation pour deployer, que ce soit en plateforme 2 ou 3.
 
 Users stocker dans notre DB MySQL.
 
-EC2: Back + Front + MySQL
+EC2: Back + Front
+DB: RDS
 
-DB: Est-ce qu'il vaut mieux utiliser RDS ou bien faire du master slave à la main avec MySQL ?
+DB: Est-ce qu'il vaut mieux utiliser RDS ou bien faire du master slave à la main avec MySQL  et un EC2?
 
-Utilisation de VPC.
+Utilisation de VPC + Subnets.
 
-2 AZ.
+2 AZ au minimum (eu-west a + eu-west b par exemple).
+
+AutoScallingGroup et du LoadBalancing sur nos EC2 ?
+
+Creation d'un VPC pour contenir nos services (Front + Back + DB).
+2 Subnets:  1 public pour notre Front + Back et 1 prive pour proteger notre DB.
+
+Est-ce que du coup on aura besoin de Nginx pour servir notre api et notre front ?
+
+A la limite pour gerer la DB on pourra mettre un EC2 avec PHPMyAdmin, mais pas forcement tres utile.
+
+Useful links:
+
+https://dev.to/asim_ansari7/deploy-a-react-node-app-to-production-on-aws-2gdf
 
 ## Platform 3:
 
-Back: Lambda
-Front: S3
-DB: DynamoDB
+- Back: Lambda
+- Front: S3
+- DB: DynamoDB
 
 Api Gateway pour nos endpoints et creer les lambda
 
@@ -60,11 +83,11 @@ https://aws.amazon.com/fr/free/?all-free-tier.sort-by=item.additionalFields.Sort
 - Reflexion autour de l'application [X]
 - Création du repo [X]
 - Schéma architecture
-- Création des comptes AWS
+- Création des comptes AWS [X]
 
 ## Question
 
 - Le front rentre dans quelle catégorie dans le tableau ?
 - Qu'est ce qu'il entend par IP en Platform 2 ? Devons-nous avoir une URL via un Route53 en Platform2 ?
-- Est-ce qu'en Platform2 nous devons avoir un AutoScallingGroup et du LoadBalancing sur nos EC2 ?
+
 
