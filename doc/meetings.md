@@ -50,7 +50,8 @@ Utilisation de VPC + Subnets.
 
 2 AZ au minimum (eu-west a + eu-west b par exemple).
 
-AutoScallingGroup et du LoadBalancing sur nos EC2 ?
+Load balancing obligatoire pour les 2 AZ.
+AutoScallingGroup sur nos EC2 ?
 
 Creation d'un VPC pour contenir nos services (Front + Back + DB).
 2 Subnets:  1 public pour notre Front + Back et 1 prive pour proteger notre DB.
@@ -59,7 +60,7 @@ Est-ce que du coup on aura besoin de Nginx pour servir notre api et notre front 
 
 A la limite pour gerer la DB on pourra mettre un EC2 avec PHPMyAdmin, mais pas forcement tres utile.
 
-Useful links:
+### Useful links
 
 https://dev.to/asim_ansari7/deploy-a-react-node-app-to-production-on-aws-2gdf
 
@@ -69,9 +70,11 @@ https://dev.to/asim_ansari7/deploy-a-react-node-app-to-production-on-aws-2gdf
 - Front: S3
 - DB: DynamoDB
 
-Api Gateway pour nos endpoints et creer les lambda
+Api Gateway pour nos endpoints et creer les lambda.
 
-Cognito pour gerer nos user
+Cognito pour gerer nos user.
+
+Devons nous utiliser de Cloudfront ?
 
 
 ## Dans le Free Tier
