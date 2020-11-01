@@ -42,21 +42,25 @@ Utiliser Cloud Formation pour deployer, que ce soit en plateforme 2 ou 3.
 Users stocker dans notre DB MySQL.
 
 EC2: Back + Front
-DB: RDS
 
-DB: Est-ce qu'il vaut mieux utiliser RDS ou bien faire du master slave à la main avec MySQL  et un EC2?
+DB: RDS
 
 Utilisation de VPC + Subnets.
 
 2 AZ au minimum (eu-west a + eu-west b par exemple).
 
 Load balancing obligatoire pour les 2 AZ.
-AutoScallingGroup sur nos EC2 ?
 
 Creation d'un VPC pour contenir nos services (Front + Back + DB).
-2 Subnets:  1 public pour notre Front + Back et 1 prive pour proteger notre DB.
+2 Subnets par AZ: 1 public pour notre Front + Back et 1 prive pour proteger notre DB.
+
+### Questions
 
 Est-ce que du coup on aura besoin de Nginx pour servir notre api et notre front ?
+DB: Est-ce qu'il vaut mieux utiliser RDS ou bien faire du master slave à la main avec MySQL et un EC2?
+Explication de l'internet gateway
+
+### Bonus
 
 A la limite pour gerer la DB on pourra mettre un EC2 avec PHPMyAdmin, mais pas forcement tres utile.
 
@@ -70,12 +74,13 @@ https://dev.to/asim_ansari7/deploy-a-react-node-app-to-production-on-aws-2gdf
 - Front: S3
 - DB: DynamoDB
 
-Api Gateway pour nos endpoints et creer les lambda.
-
+API Gateway pour nos endpoints et creer les lambda.
+On utilise Lambda car les containers sont payants (pas dans le free tier)
 Cognito pour gerer nos user.
 
-Devons nous utiliser de Cloudfront ?
+### Questions
 
+Devons nous utiliser de Cloudfront ?
 
 ## Dans le Free Tier
 
@@ -85,7 +90,7 @@ https://aws.amazon.com/fr/free/?all-free-tier.sort-by=item.additionalFields.Sort
 
 - Reflexion autour de l'application [X]
 - Création du repo [X]
-- Schéma architecture
+- Schéma architecture [X]
 - Création des comptes AWS [X]
 
 ## Question
