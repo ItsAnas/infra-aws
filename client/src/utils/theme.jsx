@@ -5,7 +5,7 @@ const theme = () =>
     palette: {
       type: "dark",
       background: {
-        paper: "rgb(27, 42, 56)",
+        paper: "rgb(21, 32, 43)",
       },
       text: {
         primary: "#fff",

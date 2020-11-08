@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
   group: {
-    marginRight: theme.spacing(1),
     color: "rgb(136, 153, 166)",
   },
   createdAt: {
@@ -27,7 +26,7 @@ const Tweet = ({ tweet }) => {
       <Grid container spacing={3} direction="row" wrap="nowrap">
         <Grid item>
           <Avatar
-            src={`https://eu.ui-avatars.com/api/?background=random&?name=${tweet.pseudo}`}
+            src={`https://eu.ui-avatars.com/api/?background=random&name=${tweet.pseudo}`}
           />
         </Grid>
 
@@ -39,17 +38,17 @@ const Tweet = ({ tweet }) => {
             <Typography
               variant="subtitle1"
               className={classes.group}
-            >{` - ${tweet.group}`}</Typography>
-            <Typography
-              variant="subtitle2"
-              className={classes.createdAt}
-            >{` - ${tweet.createdAt}`}</Typography>
+            >{` @ ${tweet.group}`}</Typography>
           </Grid>
           <Grid item>
             <Typography variant="body1">{tweet.message}</Typography>
           </Grid>
+          <Grid item>
+            <Typography variant="caption" className={classes.createdAt}>
+              {tweet.createdAt}
+            </Typography>
+          </Grid>
         </Grid>
-  
       </Grid>
     </Paper>
   );

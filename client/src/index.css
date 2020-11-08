@@ -7,7 +7,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(27, 42, 56);
   scrollbar-color: rgb(107, 125, 140) rgb(25, 39, 52);
-  color: white;
 }
 
 code {

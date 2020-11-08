@@ -1,8 +1,8 @@
 import React from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import getMockedTweets from "../utils/tweets";
 import Tweet from "./Tweet";
+import getMockedTweets from "../utils/tweets";
 
 const TweetList = () => {
   // FIXME: Load from API

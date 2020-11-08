@@ -11,7 +11,6 @@ import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    flexGrow: 1,
     padding: theme.spacing(2),
   },
   textField: {
@@ -32,7 +31,7 @@ const TweetInput = () => {
             {/* FIXME: Should be current user */}
             <Avatar
               src={
-                "https://eu.ui-avatars.com/api/?background=random&?name=Jonh+Doe"
+                "https://eu.ui-avatars.com/api/?background=random&name=Jonh+Doe"
               }
             />
           </Grid>
