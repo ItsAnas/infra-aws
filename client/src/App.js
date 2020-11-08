@@ -1,7 +1,5 @@
-const App = () => (
-  <div>
-    Hello World
-  </div>
-);
+import Home from "./views/Home";
+
+const App = () => <Home />;
 
 export default App;
