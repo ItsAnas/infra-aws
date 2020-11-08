@@ -27,8 +27,8 @@ const TweetInput = () => {
   return (
     <Paper className={classes.paper}>
       <Grid container spacing={3} direction="column">
-        <Grid item container direction="row" spacing={3}>
-          <Grid item xs={1}>
+        <Grid item container direction="row" spacing={3} wrap="nowrap">
+          <Grid item>
             {/* FIXME: Should be current user */}
             <Avatar
               src={
