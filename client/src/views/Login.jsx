@@ -6,7 +6,9 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import { Redirect } from "react-router-dom";
 import React from "react";
+import { useAuth } from "../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,9 +27,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
-  const onLoginClick = () => {
-    console.log("Login");
-  };
+  const authContext = useAuth();
+
+  if (authContext.isSignedIn) {
+    return <Redirect to="/" />;
+  }
+
+  const onLoginClick = () =>
+    authContext.signIn({ email: "toto", password: "toto" });
 
   const onSignUpClick = () => {
     console.log("Signup");
