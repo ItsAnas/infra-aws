@@ -14,7 +14,6 @@ const App = () => (
   <ThemeProvider theme={theme()}>
     <Router history={history}>
       <Suspense fallback={<div>loading...</div>}>
-        {/* FIXME: Add auth context provider */}
         <AuthContextProvider>
           <Switch>
             <PrivateRoute exact path="/">
