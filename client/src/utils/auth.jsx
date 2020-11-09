@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import jwt_decode from 'jwt-decode'
+import jwt_decode from "jwt-decode";
 import { useState } from "react";
 
 const AuthContext = React.createContext();
@@ -12,12 +12,12 @@ export function useAuth() {
   return context;
 }
 
-export function isTokenValid (token) {
+export function isTokenValid(token) {
   // FIXME: Change this to real version
   return true;
-  const { exp } = jwt_decode(token)
-  const now = Date.now().valueOf() / 1000
-  return now < exp
+  const { exp } = jwt_decode(token);
+  const now = Date.now().valueOf() / 1000;
+  return now < exp;
 }
 
 const AuthContextProvider = ({ children }) => {
@@ -36,11 +36,25 @@ const AuthContextProvider = ({ children }) => {
     setToken("someToken");
   };
 
+  const handleSignIn = ({ email, password }) => {
+    handleSign();
+  };
+
+  const handleSignUp = ({ email, password, confirmPassword }) => {
+    if (password !== confirmPassword) {
+      setErrors((prevErrors) => [...prevErrors, "Passwords does not match"]);
+    } else {
+      handleSign();
+    }
+  };
+
   const authContextValue = {
     isSignedIn,
     token,
     errors,
-    signIn: ({ email, password }) => handleSign(),
+    signIn: ({ email, password }) => handleSignIn({ email, password }),
+    signUp: ({ email, password, confirmPassword }) =>
+      handleSignUp({ email, password, confirmPassword }),
   };
 
   return (

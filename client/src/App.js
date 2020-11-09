@@ -4,7 +4,7 @@ import { Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./utils/theme";
-import Login from "./views/Login";
+import Sign from "./views/Sign";
 import AuthContextProvider from "./utils/auth";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -20,8 +20,8 @@ const App = () => (
             <PrivateRoute exact path="/">
               <Home />
             </PrivateRoute>
-            <Route exact path="/auth/login">
-              <Login />
+            <Route exact path="/auth/sign">
+              <Sign />
             </Route>
           </Switch>
         </AuthContextProvider>

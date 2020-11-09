@@ -1,4 +1,4 @@
-import { Divider, Grid, makeStyles } from "@material-ui/core";
+import { Divider, makeStyles } from "@material-ui/core";
 import React from "react";
 import Layout from "../components/Layout";
 import TweetInput from "../components/TweetInput";
