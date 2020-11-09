@@ -1,6 +1,7 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import { Button, makeStyles, Toolbar, Typography } from "@material-ui/core";
+import { useAuth } from "../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -26,6 +27,7 @@ const TwitterLogo = () => (
 
 const Header = () => {
   const classes = useStyles();
+  const authContext = useAuth();
 
   return (
     <AppBar position="sticky">
@@ -36,7 +38,7 @@ const Header = () => {
         <Typography variant="h6" className={classes.title}>
           EpiTweet
         </Typography>
-        <Button color="inherit">Login</Button>
+        <Button color="inherit" onClick={authContext.signOut}>Logout</Button>
       </Toolbar>
     </AppBar>
   );

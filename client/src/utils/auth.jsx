@@ -21,6 +21,8 @@ export function isTokenValid(token) {
 }
 
 const AuthContextProvider = ({ children }) => {
+    // FIXME: This function is missing many API calls...
+
   const [isSignedIn, setIsSignedIn] = useState(
     localStorage.getItem("isSignedIn") === "true" || false
   );
@@ -28,7 +30,6 @@ const AuthContextProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
 
   const handleSign = () => {
-    // FIXME: From API
     localStorage.setItem("isSignedIn", "true");
     localStorage.setItem("token", "someToken");
 
@@ -48,6 +49,13 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const handleSignOut = () => {
+      setIsSignedIn(false);
+      setToken(null);
+
+      localStorage.clear();
+  };
+
   const authContextValue = {
     isSignedIn,
     token,
@@ -55,6 +63,7 @@ const AuthContextProvider = ({ children }) => {
     signIn: ({ email, password }) => handleSignIn({ email, password }),
     signUp: ({ email, password, confirmPassword }) =>
       handleSignUp({ email, password, confirmPassword }),
+    signOut: () => handleSignOut(),
   };
 
   return (
