@@ -1,6 +1,12 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
-import { Button, makeStyles, Toolbar, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  makeStyles,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 import { useAuth } from "../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     width: "2rem",
     fill: "#fff",
     marginRight: theme.spacing(2),
+  },
+  avatar: {
+    marginLeft: theme.spacing(2),
   },
 }));
 
@@ -38,7 +47,13 @@ const Header = () => {
         <Typography variant="h6" className={classes.title}>
           EpiTweet
         </Typography>
-        <Button color="inherit" onClick={authContext.signOut}>Logout</Button>
+        <Button color="inherit" onClick={authContext.signOut}>
+          Logout
+        </Button>
+        <Avatar
+          src={"https://eu.ui-avatars.com/api/?background=random&name=Jonh+Doe"}
+          className={classes.avatar}
+        />
       </Toolbar>
     </AppBar>
   );
