@@ -1,14 +1,19 @@
 import {
   Button,
+  FormControl,
   Grid,
+  InputLabel,
   makeStyles,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 import React, { useCallback, useState } from "react";
 import { useAuth } from "../utils/auth";
+import groups from "../constants/groups";
 
 const LOGIN_MODE = "Login";
 const SIGNUP_MODE = "Sign up";
@@ -31,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
   },
   errors: {
     color: "#dd2c00",
+  },
+  label: {
+      top: "auto",
+      left: "auto",
   },
 }));
 
@@ -55,6 +64,7 @@ const Sign = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [group, setGroupe] = useState("");
 
   const onSignActionClick = () => {
     if (currentMode === LOGIN_MODE) authContext.signIn({ email, password });
@@ -79,59 +89,80 @@ const Sign = () => {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Grid
-          container
-          spacing={3}
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
-          <Grid item>
-            <Typography variant="h5" className={classes.title}>
-              {title}
-            </Typography>
-          </Grid>
-          {authContext.errors !== [] && <Errors errors={authContext.errors} />}
-          <Grid item className={classes.inputContainer}>
-            <TextField
-              label="Email"
-              className={classes.inputContainer}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Grid>
-          <Grid item className={classes.inputContainer}>
-            <TextField
-              label="Password"
-              className={classes.inputContainer}
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Grid>
-          {currentMode === SIGNUP_MODE && (
+      <FormControl>
+        <Paper className={classes.paper}>
+          <Grid
+            container
+            spacing={3}
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item>
+              <Typography variant="h5" className={classes.title}>
+                {title}
+              </Typography>
+            </Grid>
+            {authContext.errors !== [] && (
+              <Errors errors={authContext.errors} />
+            )}
             <Grid item className={classes.inputContainer}>
               <TextField
-                label="Confirm password"
+                label="Email"
                 className={classes.inputContainer}
-                type="password"
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
-          )}
-          <Grid item>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={onSignActionClick}
-            >
-              {currentMode}
-            </Button>
+            <Grid item className={classes.inputContainer}>
+              <TextField
+                label="Password"
+                className={classes.inputContainer}
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Grid>
+            {currentMode === SIGNUP_MODE && (
+              <Grid item className={classes.inputContainer}>
+                <TextField
+                  label="Confirm password"
+                  className={classes.inputContainer}
+                  type="password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </Grid>
+            )}
+            {currentMode === SIGNUP_MODE && (
+              <Grid item className={classes.inputContainer}>
+                <InputLabel id="group-label" className={classes.label}>Group</InputLabel>
+                <Select
+                  labelId="group-label"
+                  value={group}
+                  onChange={(e) => setGroupe(e.target.value)}
+                  className={classes.inputContainer}
+                >
+                  {groups.map((g, i) => (
+                    <MenuItem value={g} key={i}>
+                      {g}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+            )}
+            <Grid item>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={onSignActionClick}
+              >
+                {currentMode}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button onClick={onChangeModeClick}>{changeMode}</Button>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Button onClick={onChangeModeClick}>{changeMode}</Button>
-          </Grid>
-        </Grid>
-      </Paper>
+        </Paper>
+      </FormControl>
     </div>
   );
 };
