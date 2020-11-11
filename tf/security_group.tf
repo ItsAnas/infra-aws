@@ -1,3 +1,5 @@
+variable "public_ip" {}
+
 resource "aws_default_security_group" "epitweet_sg" {
   vpc_id      = aws_default_vpc.epitweet_vpc.id
 
@@ -9,7 +11,7 @@ resource "aws_default_security_group" "epitweet_sg" {
     # Please restrict your ingress to only necessary IPs and ports.
     # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
     # So put your public ip here
-    cidr_blocks = ["109.11.143.232/32"]
+    cidr_blocks = ["${var.public_ip}/32"]
   }
 
   ingress {
