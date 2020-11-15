@@ -26,7 +26,10 @@ export default class API {
   }
 
   static async getTweets() {
-
     return client.get("tweets/");
+  }
+
+  static async postTweet(data) {
+    return client.post("tweets/", data);
   }
 }

@@ -13,8 +13,18 @@ export function useAuth() {
   return context;
 }
 
+export function getNickname() {
+  const token = localStorage.getItem("token");
+  if (!token)
+    return null;
+  const tokenWithoutBearer = token.split(" ")[1];
+  const { nickname } = jwt_decode(token);
+  return nickname;
+}
+
 export function isTokenValid(token) {
-  const { exp } = jwt_decode(token);
+  const tokenWithoutBearer = token.split(" ")[1];
+  const { exp } = jwt_decode(tokenWithoutBearer);
   const now = Date.now().valueOf() / 1000;
   return now < exp;
 }
@@ -60,6 +70,7 @@ const AuthContextProvider = ({ children }) => {
     isSignedIn,
     token,
     errors,
+    nickname: getNickname(),
     signIn: ({ email, password }) => handleSignIn({ email, password }),
     signUp: ({ email, password, confirmPassword, nickname, group }) =>
     handleSignUp({ email, password, confirmPassword, nickname, group }),

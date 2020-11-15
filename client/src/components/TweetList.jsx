@@ -20,7 +20,7 @@ const TweetList = () => {
 
   return (
     <List>
-      {tweetList.map((tweet, index) => (
+      {tweetList.sort((x, y) => x.createdAt < y.createdAt).map((tweet, index) => (
         <ListItem key={index}>
           <Tweet tweet={tweet} />
         </ListItem>
