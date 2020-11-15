@@ -64,11 +64,12 @@ const Sign = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [nickname, setNickname] = useState("");
   const [group, setGroupe] = useState("");
 
   const onSignActionClick = () => {
     if (currentMode === LOGIN_MODE) authContext.signIn({ email, password });
-    else authContext.signUp({ email, password, confirmPassword });
+    else authContext.signUp({ email, password, confirmPassword, nickname });
   };
 
   const onChangeModeClick = useCallback(() => {
@@ -128,6 +129,15 @@ const Sign = () => {
                   className={classes.inputContainer}
                   type="password"
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </Grid>
+            )}
+            {currentMode === SIGNUP_MODE && (
+              <Grid item className={classes.inputContainer}>
+                <TextField
+                  label="Nickname"
+                  className={classes.inputContainer}
+                  onChange={(e) => setNickname(e.target.value)}
                 />
               </Grid>
             )}
