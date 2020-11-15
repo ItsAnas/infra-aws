@@ -12,10 +12,10 @@ router.get('/', (request, response, next) => {
 })
 
 router.post('/', (request, response, next) => {
-  // TODO: Use bearer
-  const { userId, message } = request.body
+  const { user } = request;
+  const {  message } = request.body
   const newTweet = new Tweet({
-    user: userId,
+    user: user.id,
     message
   });
   newTweet.save((error, result) => {
