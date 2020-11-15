@@ -1,7 +1,9 @@
 const router = require('express').Router()
 
-const auth = require('./auth')
+const majors = require('./majors')
+const tweets = require('./tweets')
 
-router.use('/auth', auth)
+router.use('/majors', majors)
+router.use('/tweets', tweets)
 
 module.exports = router
