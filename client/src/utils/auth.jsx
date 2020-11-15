@@ -41,7 +41,7 @@ const AuthContextProvider = ({ children }) => {
     handleSign();
   };
 
-  const handleSignUp = ({ email, password, confirmPassword }) => {
+  const handleSignUp = ({ email, password, confirmPassword, nickname }) => {
     if (password !== confirmPassword) {
       setErrors((prevErrors) => [...prevErrors, "Passwords does not match"]);
     } else {
@@ -61,8 +61,8 @@ const AuthContextProvider = ({ children }) => {
     token,
     errors,
     signIn: ({ email, password }) => handleSignIn({ email, password }),
-    signUp: ({ email, password, confirmPassword }) =>
-      handleSignUp({ email, password, confirmPassword }),
+    signUp: ({ email, password, confirmPassword, nickname }) =>
+      handleSignUp({ email, password, confirmPassword, nickname }),
     signOut: () => handleSignOut(),
   };
 
