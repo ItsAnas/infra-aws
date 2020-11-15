@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const passport = require("passport")
+const passport = require('passport')
 
 const majors = require('./majors')
 const tweets = require('./tweets')

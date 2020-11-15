@@ -2,7 +2,7 @@ const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
-const User = require("../models/User")
+const User = require('../models/User')
 
 require('dotenv').config()
 const secret = process.env.SECRET || 'secret'
@@ -14,7 +14,7 @@ router.post('/login', (request, response) => {
   User.findOne({ email })
     .then(user => {
       if (!user) {
-        return response.status(404).json({ error: "No account found" })
+        return response.status(404).json({ error: 'No account found' })
       }
 
       // Compare passwords
@@ -29,14 +29,14 @@ router.post('/login', (request, response) => {
             // Generate JWT, send it back to user
             jwt.sign(payload, secret, { expiresIn: 36000 },
               (err, token) => {
-                if (err) response.status(500).json({ error: "Error signing token" });
+                if (err) response.status(500).json({ error: 'Error signing token' });
                 response.json({
                   success: true,
                   token: `Bearer ${token}`
                 })
               })
           } else {
-            response.status(400).json({ error: "Password is incorrect" })
+            response.status(400).json({ error: 'Password is incorrect' })
           }
         })
     })
@@ -66,7 +66,7 @@ router.post('/register', (request, response) => {
             if (err) throw err;
             newUser.password = hash;
             newUser.save().then(user => response.json(user))
-              .catch(err => response.status(400).json({ error: "Error while register" }))
+              .catch(err => response.status(400).json({ error: 'Error while register' }))
           })
       })
     })

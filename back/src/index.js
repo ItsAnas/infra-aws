@@ -21,9 +21,10 @@ const address = process.env.API_ADDRESS || 'localhost'
 const mongoUsername = process.env.MONGO_INITDB_ROOT_USERNAME
 const mongoPassword = process.env.MONGO_INITDB_ROOT_PASSWORD
 const mongoAddress = process.env.MONGO_ADDRESS
+const mongoDatabase = process.env.MONGO_INITDB_DATABASE
 
 
-mongoose.connect(`mongodb://${mongoUsername}:${mongoPassword}@${mongoAddress}/epitweet`, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`mongodb://${mongoUsername}:${mongoPassword}@${mongoAddress}/${mongoDatabase}`, {useNewUrlParser: true, useUnifiedTopology: true})
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
