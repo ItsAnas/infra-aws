@@ -1,5 +1,6 @@
 const express = require('express')
-const cp = require('cookie-parser')
+const cors = require('cors')
+const cp = require('cookie-parser');
 const passport = require('passport')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -10,6 +11,8 @@ const logger = require('./logger')
 
 
 const app = express()
+
+app.use(cors())
 
 app.use(morgan('dev', { stream: logger.stream }))
 

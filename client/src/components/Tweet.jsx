@@ -20,32 +20,33 @@ const useStyles = makeStyles((theme) => ({
 
 const Tweet = ({ tweet }) => {
   const classes = useStyles();
+  const date = new Date(tweet.createdAt);
 
   return (
     <Paper className={classes.paper}>
       <Grid container spacing={3} direction="row" wrap="nowrap">
         <Grid item>
           <Avatar
-            src={`https://eu.ui-avatars.com/api/?background=random&name=${tweet.pseudo}`}
+            src={`https://eu.ui-avatars.com/api/?background=random&name=${tweet.user.nickname}`}
           />
         </Grid>
 
         <Grid item xs={11}>
           <Grid item container direction="row" alignItems="center">
             <Typography variant="h6" className={classes.pseudo}>
-              {tweet.pseudo}
+              {tweet.user.nickname}
             </Typography>
             <Typography
               variant="subtitle1"
               className={classes.group}
-            >{` @ ${tweet.group}`}</Typography>
+            >{` @ ${tweet.user.group}`}</Typography>
           </Grid>
           <Grid item>
             <Typography variant="body1">{tweet.message}</Typography>
           </Grid>
           <Grid item>
             <Typography variant="caption" className={classes.createdAt}>
-              {tweet.createdAt}
+              {date.toLocaleString()}
             </Typography>
           </Grid>
         </Grid>
