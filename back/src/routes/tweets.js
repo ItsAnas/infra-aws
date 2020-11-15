@@ -1,30 +1,6 @@
 const router = require('express').Router()
 const Tweet = require('../models/Tweet')
 
-// const tweets = [
-//   {
-//     pseudo: 'Mintoo',
-//     group: 'MTI',
-//     message: 'Bonjour',
-//     createdAt: '2020-01-01'
-//   },{
-//     pseudo: 'Mintoo',
-//     group: 'MTI',
-//     message: 'Bonjour',
-//     createdAt: '2020-01-01'
-//   },{
-//     pseudo: 'Mintoo',
-//     group: 'MTI',
-//     message: 'Bonjour',
-//     createdAt: '2020-01-01'
-//   },{
-//     pseudo: 'Mintoo',
-//     group: 'MTI',
-//     message: 'Bonjour',
-//     createdAt: '2020-01-01'
-//   },
-// ]
-
 router.get('/', (request, response, next) => {
   const tweets = Tweet.find({}, (error, result) => {
     if (error) {

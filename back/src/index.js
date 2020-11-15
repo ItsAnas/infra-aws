@@ -18,12 +18,18 @@ if (!isProduction) {
 const port = process.env.API_PORT || 5000
 const address = process.env.API_ADDRESS || 'localhost'
 
-mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true, useUnifiedTopology: true})
+const mongoUsername = process.env.MONGO_INITDB_ROOT_USERNAME
+const mongoPassword = process.env.MONGO_INITDB_ROOT_PASSWORD
+const mongoAddress = process.env.MONGO_ADDRESS
+
+
+mongoose.connect(`mongodb://${mongoUsername}:${mongoPassword}@${mongoAddress}/epitweet`, {useNewUrlParser: true, useUnifiedTopology: true})
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  logger.info(`Connected to MongoDB on localhost/test`)
-  
+  logger.info('Connected to MongoDB')
+
   app.listen(port, address, () => {
     logger.info(`Server listening on ${address}:${port}`)
   })
