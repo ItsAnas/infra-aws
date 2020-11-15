@@ -8,16 +8,15 @@ router.get('/', (request, response, next) => {
     } else {
       response.json(result)
     }
-  })
+  }).populate({ path: 'user', select: ['nickname', 'group'] });
 })
 
 router.post('/', (request, response, next) => {
-  const { pseudo, group, message } = request.body
+  // TODO: Use bearer
+  const { userId, message } = request.body
   const newTweet = new Tweet({
-    pseudo,
-    group,
-    message,
-    createdAt: new Date(Date.now()).toUTCString()
+    user: userId,
+    message
   });
   newTweet.save((error, result) => {
     if (error) {
