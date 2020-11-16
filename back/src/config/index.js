@@ -1,6 +1,6 @@
-const passport = require('passport')
 const JwtStrategy = require('passport-jwt').Strategy
-const ExtractJwt = require('passport-jwt').ExtractJwt
+const { ExtractJwt } = require('passport-jwt')
+const logger = require('../logger')
 
 const User = require('../models/User')
 
@@ -10,22 +10,22 @@ const secret = process.env.SECRET || 'secret'
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: secret
+  secretOrKey: secret,
 }
 
-module.exports = passport => {
+module.exports = (passport) => {
   passport.use(new JwtStrategy(opts, (payload, done) => {
     User.findById(payload.id)
-      .then(user => {
+      .then((user) => {
         if (user) {
           return done(null, {
             id: user.id,
             nickname: user.nickname,
-            email: user.email
+            email: user.email,
           })
         }
+        return done(null, null)
       })
-      .catch(err => console.log(err))
+      .catch((err) => logger.info(`Error while finding user: ${err}`))
   }))
 }
-

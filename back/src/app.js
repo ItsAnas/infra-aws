@@ -1,5 +1,5 @@
 const express = require('express')
-const cp = require('cookie-parser');
+const cp = require('cookie-parser')
 const passport = require('passport')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')

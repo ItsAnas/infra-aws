@@ -24,11 +24,11 @@ const mongoAddress = process.env.MONGO_ADDRESS
 const mongoDatabase = process.env.MONGO_INITDB_DATABASE
 
 
-mongoose.connect(`mongodb://${mongoUsername}:${mongoPassword}@${mongoAddress}/${mongoDatabase}`, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`mongodb://${mongoUsername}:${mongoPassword}@${mongoAddress}/${mongoDatabase}`, { useNewUrlParser: true, useUnifiedTopology: true })
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', () => {
   logger.info('Connected to MongoDB')
 
   app.listen(port, address, () => {
