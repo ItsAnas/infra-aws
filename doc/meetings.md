@@ -100,7 +100,7 @@ https://aws.amazon.com/fr/free/?all-free-tier.sort-by=item.additionalFields.Sort
 - Le front rentre dans quelle catégorie dans le tableau ?
 - Qu'est ce qu'il entend par IP en Platform 2 ? Devons-nous avoir une URL via un Route53 en Platform2 ?
 
-## Réunion
+## Réunion 1
 
 P2 = Plateforme 2\
 P3 = Plateforme 3
@@ -131,3 +131,17 @@ Rien à redire sur les schémas, trouve que c'est très bien.
 
 Neff trouve qu'on avance bien, il a rien à redire.\
 Juste, faire attention au temps consacré à l'appli.
+
+## Réunion 2
+
+Launch configuration est lancée pour chaque vm, donc il faut attention au remote exec.\
+Il vaut mieux utiliser user data.
+
+Les user data peuvent etre long, dans la vraie vie, on genererait une AMI a chaque push.\
+(Peut rapporter des points en plus si on le fait)
+
+Pas de serveur SSH, pas de failles.
+
+Comment le site web statique aura l'url du backend ?
+> Modifier un fichier statique de conf (gros sed quand on déploie).\
+> De façon plus propre, on peut avoir le front qui pointe vers un dns.
