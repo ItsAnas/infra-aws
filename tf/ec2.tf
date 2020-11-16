@@ -1,5 +1,8 @@
 variable "pm2_key" {}
 
+variable "instance_count" {
+  default = "2"
+}
 
 resource "aws_key_pair" "ssh-key" {
   key_name   = "ssh-key"
@@ -7,13 +10,14 @@ resource "aws_key_pair" "ssh-key" {
 }
 
 resource "aws_instance" "epitweet_front" {
+  count         = var.instance_count
   ami           = "ami-0d3f551818b21ed81"
   instance_type = "t2.micro"
 
   key_name = "ssh-key"
 
   tags = {
-    Name = "Epitweet-Front"
+    Name = "Epitweet-Front-${count.index + 1}"
   }
 
   connection {
@@ -30,7 +34,7 @@ resource "aws_instance" "epitweet_front" {
       "sudo apt -y update && sudo apt install -y yarn",
       "git clone https://github.com/ItsAnas/infra-aws.git",
       "cd infra-aws",
-      "git checkout client",
+      "git checkout deploy-p2",
       "cd client",
       "yarn install && yarn build",
       "export PATH=\"$PATH:$(yarn global bin)\"",

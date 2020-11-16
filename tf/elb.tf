@@ -18,7 +18,7 @@ resource "aws_elb" "epitweet_elb" {
     interval            = 30
   }
 
-  instances                   = [aws_instance.epitweet_front.id]
+  instances                   = aws_instance.epitweet_front.*.id
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true
