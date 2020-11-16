@@ -1,7 +1,7 @@
 {
-  "name": "api",
+  "name": "Epitweet",
   "version": "1.0.0",
-  "description": "A RESTful API",
+  "description": "The Epitweet API",
   "main": "index.js",
   "jest": {
     "testMatch": [
@@ -24,14 +24,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/Mintoo200/api.git"
+    "url": "git+https://github.com/ItsAnas/infra-aws.git"
   },
   "author": "Gauthier Fiorentino",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/Mintoo200/api/issues"
+    "url": "https://github.com/ItsAnas/infra-aws/issues"
   },
-  "homepage": "https://gitlab.com/Mintoo200/api#readme",
+  "homepage": "https://github.com/ItsAnas/infra-aws/blob/main/client/README.md",
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
