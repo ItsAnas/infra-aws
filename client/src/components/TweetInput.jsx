@@ -6,7 +6,9 @@ import {
   Paper,
   TextField,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState, useCallback } from "react";
+import API from "../utils/api";
+import { useAuth } from "../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -19,18 +21,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TweetInput = () => {
+const TweetInput = ({ refreshTweets }) => {
   const classes = useStyles();
+  const authContext = useAuth();
+  const [tweetInput, setTweetInput] = useState("");
+
+  const onTweetSend = useCallback(() => {
+    API.postTweet({ message: tweetInput })
+      .then(refreshTweets);
+  }, [tweetInput]);
 
   return (
     <Paper className={classes.paper}>
       <Grid container spacing={3} direction="column">
         <Grid item container direction="row" spacing={3} wrap="nowrap">
           <Grid item>
-            {/* FIXME: Should be current user */}
             <Avatar
               src={
-                "https://eu.ui-avatars.com/api/?background=random&name=Jonh+Doe"
+                `https://eu.ui-avatars.com/api/?background=random&name=${authContext.nickname}`
               }
             />
           </Grid>
@@ -40,11 +48,12 @@ const TweetInput = () => {
               placeholder="What's your mood today?"
               multiline
               className={classes.textField}
+              onChange={(e) => setTweetInput(e.target.value)}
             />
           </Grid>
         </Grid>
         <Grid item container justify="flex-end">
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" onClick={onTweetSend}>
             Send
           </Button>
         </Grid>

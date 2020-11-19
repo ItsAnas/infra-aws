@@ -50,7 +50,7 @@ const Header = () => {
           Logout
         </Button>
         <Avatar
-          src={"https://eu.ui-avatars.com/api/?background=random&name=Jonh+Doe"}
+          src={`https://eu.ui-avatars.com/api/?background=random&name=${authContext.nickname}`}
           className={classes.avatar}
         />
       </Toolbar>

@@ -23,7 +23,7 @@ router.post('/login', (request, response) => {
           if (isMatch) {
             const payload = {
               id: user._id,
-              name: user.userName,
+              nickname: user.nickname
             }
 
             // Generate JWT, send it back to user

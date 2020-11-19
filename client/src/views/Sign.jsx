@@ -69,7 +69,7 @@ const Sign = () => {
 
   const onSignActionClick = () => {
     if (currentMode === LOGIN_MODE) authContext.signIn({ email, password });
-    else authContext.signUp({ email, password, confirmPassword, nickname });
+    else authContext.signUp({ email, password, confirmPassword, nickname, group });
   };
 
   const onChangeModeClick = useCallback(() => {
