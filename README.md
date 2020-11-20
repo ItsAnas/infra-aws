@@ -17,9 +17,11 @@ TODO:
 
 [X] - Try to deploy two instance of ec2
 
-[ ] - Run backend along with frontend in EC2
+[X] - Run backend along with frontend in EC2
 
 [ ] - Use `user_data` instead of `remote_exec`
+
+[ ] - Put `user_data` in shell script
 
 [ ] - Add EC2 in different AZ, for that, create two public subnet as resources in our VPC, assign those subnet to our EC2
     => https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#subnet_id
@@ -40,3 +42,4 @@ Questions:
 
 * May be we should have a common private/public ssh key ?
 * May be put a LoadBalancer in order to choose database if one is down
+
