@@ -17,9 +17,9 @@ TODO:
 
 [X] - Try to deploy two instance of ec2
 
-[ ] - Use `user_data` instead of `remote_exec`
+[ ] - Run backend along with frontend in EC2
 
-[ ] - Add ELB to our security_group ?
+[ ] - Use `user_data` instead of `remote_exec`
 
 [ ] - Add EC2 in different AZ, for that, create two public subnet as resources in our VPC, assign those subnet to our EC2
     => https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#subnet_id
@@ -29,6 +29,8 @@ TODO:
 [ ] - Add ELB between EC2s and DB
 
 [ ] - Add auto scaling group for our front/back EC2s
+
+[ ] - Add ELB to our security_group ?
 
 [ ] - Remove `8080` ingress port on security group ?
 
