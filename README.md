@@ -19,12 +19,18 @@ TODO:
 
 [ ] - Use `user_data` instead of `remote_exec`
 
-[ ] - Add ELB to our security_group
-
-[ ] - Remove `8080` ingress port on security group ?
+[ ] - Add ELB to our security_group ?
 
 [ ] - Add EC2 in different AZ, for that, create two public subnet as resources in our VPC, assign those subnet to our EC2
     => https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#subnet_id
+
+[ ] - Add 2 EC2 with mongo database and replication (in same AZs as EC2)
+
+[ ] - Add ELB between EC2s and DB
+
+[ ] - Add auto scaling group for our front/back EC2s
+
+[ ] - Remove `8080` ingress port on security group ?
 
 [ ] - Remove ssh from security group (today it is useful for debug, but it's not a good practice)
 
