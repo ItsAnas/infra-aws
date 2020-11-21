@@ -40,7 +40,6 @@ TODO:
 [X] - Put `user_data` in shell script
 
 
-
 [ ] - Add EC2 in different AZ, for that, create two public subnet as resources in our VPC, assign those subnet to our EC2
     => https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#subnet_id
 
@@ -48,7 +47,9 @@ TODO:
 
 [ ] - Add ELB between EC2s and DB
 
-[ ] - Add auto scaling group for our front/back EC2s
+[X] - Add auto scaling group for our front/back EC2s
+
+// Bonuses / Cleaning
 
 [ ] - Add ELB to our security_group ?
 
