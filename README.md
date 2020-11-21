@@ -13,6 +13,22 @@ You first must define some environnement variables:
 42sh~ export TF_VAR_public_ip="your public ip" # used to access ec2(s) in ssh
 ```
 
+```
+42sh~ export TF_VAR_mongo_initdb_database="the name of the database" # used for access database
+```
+
+```
+42sh~ export TF_VAR_mongo_root_username="username of the database" # used for access database
+```
+
+```
+42sh~ export TF_VAR_mongo_root_password="the password of the database" # used for access database
+```
+
+```
+42sh~ export TF_VAR_mongo_address="the ip of the database" # used for access database
+```
+
 TODO:
 
 [X] - Try to deploy two instance of ec2
