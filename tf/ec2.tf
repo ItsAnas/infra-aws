@@ -12,7 +12,8 @@ resource "aws_key_pair" "ssh-key" {
 
 resource "aws_launch_template" "epitweet_ec2" {
   name_prefix   = "epitweet-"
-  image_id      = "ami-0d3f551818b21ed81"
+  # image_id      = "ami-0d3f551818b21ed81"
+  image_id        = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
 
   key_name = "ssh-key"
@@ -45,7 +46,6 @@ data "aws_ami" "ubuntu" {
 resource "aws_subnet" "my_subnet" {
   vpc_id                  = aws_default_vpc.epitweet_vpc.id
   cidr_block              = "172.31.255.0/24"
-  map_public_ip_on_launch = true
 }
 
 resource "aws_network_interface" "epitweet_db_network_interface" {
@@ -73,6 +73,10 @@ resource "aws_instance" "epitweet_ec2_db_1" {
     mongo_root_password   = var.mongo_root_password,
     mongo_address         = var.mongo_address
   }))
+
+  tags = {
+    Name = "db_instance"
+  }
 }
 
 #resource "aws_instance" "epitweet_ec2_db_2" {

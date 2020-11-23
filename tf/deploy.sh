@@ -27,6 +27,6 @@ echo MONGO_INITDB_DATABASE=${mongo_initdb_database} >> .env
 echo MONGO_INITDB_ROOT_USERNAME=${mongo_root_username} >> .env
 echo MONGO_INITDB_ROOT_PASSWORD=${mongo_root_password} >> .env
 echo MONGO_ADDRESS=${mongo_address} >> .env
-sudo docker-compose up --build -d
+# sudo docker-compose up --build -d
 pm2 start src/index.js --name 'Epitweet back'
 
