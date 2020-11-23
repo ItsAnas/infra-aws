@@ -40,7 +40,7 @@ TODO:
 [X] - Put `user_data` in shell script
 
 
-[ ] - Add EC2 in different AZ, for that, create two public subnet as resources in our VPC, assign those subnet to our EC2
+[X] - Add EC2 in different AZ, for that, create two public subnet as resources in our VPC, assign those subnet to our EC2
     => https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#subnet_id
 
 [ ] - Add 2 EC2 with mongo database and replication (in same AZs as EC2)
@@ -51,14 +51,11 @@ TODO:
 
 // Bonuses / Cleaning
 
-[ ] - Add ELB to our security_group ?
-
-[ ] - Remove `8080` ingress port on security group ?
+[ ] - Only autorize 8080 and 5000 from our ELB security group
 
 [ ] - Remove ssh from security group (today it is useful for debug, but it's not a good practice)
 
 Questions:
 
-* May be we should have a common private/public ssh key ?
 * May be put a LoadBalancer in order to choose database if one is down
 
