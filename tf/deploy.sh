@@ -18,7 +18,7 @@ cd client
 yarn install && yarn build
 yarn global add pm2 serve
 pm2 link ${pm2_key}
-pm2 serve build/ 8080 --name 'Epitweet front' --spa
+pm2 serve build/ 8080 --name 'Epitweet front'
 
 # Server serve
 cd ../back/
