@@ -3,9 +3,6 @@
 set -Eeuo pipefail
 
 # Fetch everything
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo 'deb https://dl.yarnpkg.com/debian/ stable main' | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt -y update && sudo apt install -y yarn nodejs docker.io docker-compose
 git clone https://github.com/ItsAnas/infra-aws.git
 cd infra-aws
 git checkout deploy-p2
