@@ -145,3 +145,18 @@ Pas de serveur SSH, pas de failles.
 Comment le site web statique aura l'url du backend ?
 > Modifier un fichier statique de conf (gros sed quand on déploie).\
 > De façon plus propre, on peut avoir le front qui pointe vers un dns.
+
+## Réunion 3
+
+Comment on gère le failover de la db quand la primary tombe ?
+> Soit, le secondary prend l'ip du primary (ipe sur linux) quand le secondary detecte que le primary est down.\
+> Soit vous passez par des AWS ENI.\
+> Peut-etre avec les ELB, ça peut passer aussi.
+
+On a des soucis pour connecter Cognito et notre back.
+> Regarder les tutos complets, notamment 'Les taxis et les licornes' (http://www.wildrydes.com).\
+> Faites un delta entre le tuto et ce dont vous avez besoin.\
+> Ensuite, un peu de Postman avec un token bearer generer par Cognito pour debug.
+
+Bonus possibles
+> cloudwatch pour les logs, image (AMI) en p2 (ça, c'est fait), envoie d'image (avec création de miniature), suggestion cognitive (IA mdrr nique sa race ça)
