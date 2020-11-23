@@ -21,7 +21,7 @@ data "aws_ami" "ubuntu" {
 }
 
 
-resource "aws_launch_template" "epitweet_ec2" {
+resource "aws_launch_template" "epitweet_ec2_client" {
   name_prefix   = "epitweet-"
   # image_id      = "ami-0d3f551818b21ed81"
   image_id        = data.aws_ami.ubuntu.id
@@ -29,7 +29,25 @@ resource "aws_launch_template" "epitweet_ec2" {
 
   key_name = "ssh-key"
 
-  user_data = base64encode(templatefile("${path.module}/deploy.sh", {
+  user_data = base64encode(templatefile("${path.module}/deploy_client.sh", {
+    pm2_key               = var.pm2_key,
+    api_address           = aws_elb.epitweet_elb_server.dns_name
+  }))
+
+  tags = {
+    Name = "epitweet-client"
+  }
+}
+
+resource "aws_launch_template" "epitweet_ec2_server" {
+  name_prefix   = "epitweet-"
+  # image_id      = "ami-0d3f551818b21ed81"
+  image_id        = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+
+  key_name = "ssh-key"
+
+  user_data = base64encode(templatefile("${path.module}/deploy_server.sh", {
     pm2_key               = var.pm2_key,
     mongo_initdb_database = var.mongo_initdb_database,
     mongo_root_username   = var.mongo_root_username,
@@ -38,7 +56,7 @@ resource "aws_launch_template" "epitweet_ec2" {
   }))
 
   tags = {
-    Name = "epitweet"
+    Name = "epitweet-server"
   }
 }
 

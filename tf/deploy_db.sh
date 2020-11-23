@@ -29,6 +29,8 @@ MONGO_INITDB_DATABASE="${mongo_initdb_database}"
 MONGO_INITDB_ROOT_USERNAME="${mongo_root_username}"
 MONGO_INITDB_ROOT_PASSWORD="${mongo_root_password}"
 MONGO_ADDRESS="${mongo_address}"
+
 # Wait a little bit, mongo is starting...
-sleep 30
+while ! mongo --eval "db.version()" > /dev/null 2>&1; do sleep 0.1; done
+
 mongo $MONGO_ADDRESS --eval "db.auth('$MONGO_INITDB_ROOT_USERNAME', '$MONGO_INITDB_ROOT_PASSWORD'); db = db.getSiblingDB('$MONGO_INITDB_DATABASE'); db.createUser({ user: '$MONGO_INITDB_ROOT_USERNAME', pwd: '$MONGO_INITDB_ROOT_PASSWORD', roles: [{ role: 'readWrite', db: '$MONGO_INITDB_DATABASE' }] });"
