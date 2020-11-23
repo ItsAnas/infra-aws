@@ -1,7 +1,7 @@
 variable "public_ip" {}
 
 resource "aws_default_security_group" "epitweet_sg" {
-  vpc_id      = aws_default_vpc.epitweet_vpc.id
+  vpc_id = aws_default_vpc.epitweet_vpc.id
 
   ingress {
     description = "ssh"
@@ -39,10 +39,10 @@ resource "aws_default_security_group" "epitweet_sg" {
   }
 
   egress {
-    from_port     = 0
-    to_port       = 0
-    protocol      = "-1"
-    cidr_blocks   = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {

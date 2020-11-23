@@ -9,5 +9,5 @@ resource "aws_autoscaling_group" "epitweet_asg" {
     version = "$Latest"
   }
 
-  load_balancers  = [aws_elb.epitweet_elb.id]
+  load_balancers = [aws_elb.epitweet_elb.id]
 }
