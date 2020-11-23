@@ -14,6 +14,10 @@ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb
 sudo apt-get update
 sudo apt-get install -y mongodb-org
 
+# Remote connectivity
+sudo ufw allow from '0.0.0.0/0' to any port 27017
+sudo sed -Ei 's/bindIp: .*/\0,172.31.255.5/' /etc/mongod.conf
+
 # Services
 sudo systemctl start mongod
 sudo systemctl enable mongod
