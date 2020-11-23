@@ -60,10 +60,19 @@ resource "aws_instance" "epitweet_ec2_db_1" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   key_name      = "ssh-key"
+
   network_interface {
     network_interface_id = aws_network_interface.epitweet_db_network_interface.id
     device_index         = 0
   }
+
+  user_data = base64encode(templatefile("${path.module}/deploy_db.sh", {
+    pm2_key               = var.pm2_key,
+    mongo_initdb_database = var.mongo_initdb_database,
+    mongo_root_username   = var.mongo_root_username,
+    mongo_root_password   = var.mongo_root_password,
+    mongo_address         = var.mongo_address
+  }))
 }
 
 #resource "aws_instance" "epitweet_ec2_db_2" {
