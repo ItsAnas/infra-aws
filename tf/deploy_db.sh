@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Fetch everythinh
+set -Eeuo pipefail
+
+# Fetch everything
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo 'deb https://dl.yarnpkg.com/debian/ stable main' | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt -y update && sudo apt install -y yarn nodejs docker.io docker-compose
@@ -27,4 +29,6 @@ MONGO_INITDB_DATABASE="${mongo_initdb_database}"
 MONGO_INITDB_ROOT_USERNAME="${mongo_root_username}"
 MONGO_INITDB_ROOT_PASSWORD="${mongo_root_password}"
 MONGO_ADDRESS="${mongo_address}"
-mongo --eval "db.auth('$MONGO_INITDB_ROOT_USERNAME', '$MONGO_INITDB_ROOT_PASSWORD'); db = db.getSiblingDB('$MONGO_INITDB_DATABASE'); db.createUser({ user: '$MONGO_INITDB_ROOT_USERNAME', pwd: '$MONGO_INITDB_ROOT_PASSWORD', roles: [{ role: 'readWrite', db: '$MONGO_INITDB_DATABASE' }] });"
+# Wait a little bit, mongo is starting...
+sleep 30
+mongo $MONGO_ADDRESS --eval "db.auth('$MONGO_INITDB_ROOT_USERNAME', '$MONGO_INITDB_ROOT_PASSWORD'); db = db.getSiblingDB('$MONGO_INITDB_DATABASE'); db.createUser({ user: '$MONGO_INITDB_ROOT_USERNAME', pwd: '$MONGO_INITDB_ROOT_PASSWORD', roles: [{ role: 'readWrite', db: '$MONGO_INITDB_DATABASE' }] });"

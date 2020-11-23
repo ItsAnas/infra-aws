@@ -46,6 +46,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_subnet" "my_subnet" {
   vpc_id                  = aws_default_vpc.epitweet_vpc.id
   cidr_block              = "172.31.255.0/24"
+  map_public_ip_on_launch = "true"
 }
 
 resource "aws_network_interface" "epitweet_db_network_interface" {
