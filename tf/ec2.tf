@@ -6,6 +6,13 @@ variable "mongo_address" {}
 variable "mongo_replica_set_name" {
   default = "epitweet-replica-set"
 }
+variable "mongo_private_addresses" {
+  default = [
+    "172.31.255.5",
+    "172.31.255.6",
+    "172.31.255.7"
+  ]
+}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -66,7 +73,7 @@ resource "aws_launch_template" "epitweet_ec2_server" {
 
 resource "aws_network_interface" "epitweet_db_network_interface_0" {
   subnet_id   = aws_subnet.epitweet_subnet.id
-  private_ips = ["172.31.255.5"]
+  private_ips = [var.mongo_private_addresses[0]]
   tags = {
     Name = "primary_network_interface_0"
   }
@@ -74,7 +81,7 @@ resource "aws_network_interface" "epitweet_db_network_interface_0" {
 
 resource "aws_network_interface" "epitweet_db_network_interface_1" {
   subnet_id   = aws_subnet.epitweet_subnet.id
-  private_ips = ["172.31.255.6"]
+  private_ips = [var.mongo_private_addresses[1]]
   tags = {
     Name = "primary_network_interface_1"
   }
@@ -82,7 +89,7 @@ resource "aws_network_interface" "epitweet_db_network_interface_1" {
 
 resource "aws_network_interface" "epitweet_db_network_interface_2" {
   subnet_id   = aws_subnet.epitweet_subnet.id
-  private_ips = ["172.31.255.7"]
+  private_ips = [var.mongo_private_addresses[2]]
   tags = {
     Name = "primary_network_interface_2"
   }
@@ -99,15 +106,15 @@ resource "aws_instance" "epitweet_ec2_db_1" {
   }
 
   user_data = base64encode(templatefile("${path.module}/deploy_db.sh", {
-    pm2_key               = var.pm2_key,
-    mongo_initdb_database = var.mongo_initdb_database,
-    mongo_root_username   = var.mongo_root_username,
-    mongo_root_password   = var.mongo_root_password,
-    mongo_address         = var.mongo_address,
-    is_primary            = "true",
-    private_address       = "172.31.255.5",
-    members               = join("\n", ["172.31.255.6", "172.31.255.7"])
+    pm2_key                = var.pm2_key,
+    mongo_initdb_database  = var.mongo_initdb_database,
+    mongo_root_username    = var.mongo_root_username,
+    mongo_root_password    = var.mongo_root_password,
     mongo_replica_set_name = var.mongo_replica_set_name,
+    mongo_address          = var.mongo_address,
+    is_primary             = "true",
+    private_address        = var.mongo_private_addresses[0],
+    members                = join("\n", [var.mongo_private_addresses[1], var.mongo_private_addresses[2]])
   }))
 
   tags = {
@@ -126,15 +133,15 @@ resource "aws_instance" "epitweet_ec2_db_2" {
   }
 
   user_data = base64encode(templatefile("${path.module}/deploy_db.sh", {
-    pm2_key               = var.pm2_key,
-    mongo_initdb_database = var.mongo_initdb_database,
-    mongo_root_username   = var.mongo_root_username,
-    mongo_root_password   = var.mongo_root_password,
-    mongo_address         = var.mongo_address,
-    is_primary            = "false",
-    private_address       = "172.31.255.6",
-    members               = ""
+    pm2_key                = var.pm2_key,
+    mongo_initdb_database  = var.mongo_initdb_database,
+    mongo_root_username    = var.mongo_root_username,
+    mongo_root_password    = var.mongo_root_password,
     mongo_replica_set_name = var.mongo_replica_set_name,
+    mongo_address          = var.mongo_address,
+    is_primary             = "false",
+    private_address        = var.mongo_private_addresses[1],
+    members                = ""
   }))
 
   tags = {
@@ -153,15 +160,15 @@ resource "aws_instance" "epitweet_ec2_db_3" {
   }
 
   user_data = base64encode(templatefile("${path.module}/deploy_db.sh", {
-    pm2_key               = var.pm2_key,
-    mongo_initdb_database = var.mongo_initdb_database,
-    mongo_root_username   = var.mongo_root_username,
-    mongo_root_password   = var.mongo_root_password,
-    mongo_address         = var.mongo_address,
-    is_primary            = "false",
-    private_address       = "172.31.255.7",
-    members               = ""
+    pm2_key                = var.pm2_key,
+    mongo_initdb_database  = var.mongo_initdb_database,
+    mongo_root_username    = var.mongo_root_username,
+    mongo_root_password    = var.mongo_root_password,
     mongo_replica_set_name = var.mongo_replica_set_name,
+    mongo_address          = var.mongo_address,
+    is_primary             = "false",
+    private_address        = var.mongo_private_addresses[2],
+    members                = ""
   }))
 
   tags = {
