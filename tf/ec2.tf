@@ -22,16 +22,16 @@ data "aws_ami" "ubuntu" {
 
 
 resource "aws_launch_template" "epitweet_ec2_client" {
-  name_prefix   = "epitweet-"
+  name_prefix = "epitweet-"
   # image_id      = "ami-0d3f551818b21ed81"
-  image_id        = data.aws_ami.ubuntu.id
+  image_id      = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
 
   key_name = "ssh-key"
 
   user_data = base64encode(templatefile("${path.module}/deploy_client.sh", {
-    pm2_key               = var.pm2_key,
-    api_address           = aws_elb.epitweet_elb_server.dns_name
+    pm2_key     = var.pm2_key,
+    api_address = aws_elb.epitweet_elb_server.dns_name
   }))
 
   tags = {
@@ -40,9 +40,9 @@ resource "aws_launch_template" "epitweet_ec2_client" {
 }
 
 resource "aws_launch_template" "epitweet_ec2_server" {
-  name_prefix   = "epitweet-"
+  name_prefix = "epitweet-"
   # image_id      = "ami-0d3f551818b21ed81"
-  image_id        = data.aws_ami.ubuntu.id
+  image_id      = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
 
   key_name = "ssh-key"
@@ -60,11 +60,27 @@ resource "aws_launch_template" "epitweet_ec2_server" {
   }
 }
 
-resource "aws_network_interface" "epitweet_db_network_interface" {
+resource "aws_network_interface" "epitweet_db_network_interface_0" {
   subnet_id   = aws_subnet.epitweet_subnet.id
   private_ips = ["172.31.255.5"]
   tags = {
-    Name = "primary_network_interface"
+    Name = "primary_network_interface_0"
+  }
+}
+
+resource "aws_network_interface" "epitweet_db_network_interface_1" {
+  subnet_id   = aws_subnet.epitweet_subnet.id
+  private_ips = ["172.31.255.6"]
+  tags = {
+    Name = "primary_network_interface_1"
+  }
+}
+
+resource "aws_network_interface" "epitweet_db_network_interface_2" {
+  subnet_id   = aws_subnet.epitweet_subnet.id
+  private_ips = ["172.31.255.7"]
+  tags = {
+    Name = "primary_network_interface_2"
   }
 }
 
@@ -74,7 +90,7 @@ resource "aws_instance" "epitweet_ec2_db_1" {
   key_name      = "ssh-key"
 
   network_interface {
-    network_interface_id = aws_network_interface.epitweet_db_network_interface.id
+    network_interface_id = aws_network_interface.epitweet_db_network_interface_0.id
     device_index         = 0
   }
 
@@ -83,7 +99,10 @@ resource "aws_instance" "epitweet_ec2_db_1" {
     mongo_initdb_database = var.mongo_initdb_database,
     mongo_root_username   = var.mongo_root_username,
     mongo_root_password   = var.mongo_root_password,
-    mongo_address         = var.mongo_address
+    mongo_address         = var.mongo_address,
+    is_primary            = "true",
+    private_address       = "172.31.255.5",
+    members               = join("\n", ["172.31.255.6", "172.31.255.7"])
   }))
 
   tags = {
@@ -91,31 +110,54 @@ resource "aws_instance" "epitweet_ec2_db_1" {
   }
 }
 
-#resource "aws_instance" "epitweet_ec2_db_2" {
-#  ami           = data.aws_ami.ubuntu.id
-#  instance_type = "t2.micro"
-#  key_name      = "ssh-key"
-#}
+resource "aws_instance" "epitweet_ec2_db_2" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  key_name      = "ssh-key"
 
-#resource "aws_instance" "epitweet_ec2_db_3" {
-#  ami           = data.aws_ami.ubuntu.id
-#  instance_type = "t2.micro"
-#  key_name      = "ssh-key"
-#}
+  network_interface {
+    network_interface_id = aws_network_interface.epitweet_db_network_interface_1.id
+    device_index         = 0
+  }
 
+  user_data = base64encode(templatefile("${path.module}/deploy_db.sh", {
+    pm2_key               = var.pm2_key,
+    mongo_initdb_database = var.mongo_initdb_database,
+    mongo_root_username   = var.mongo_root_username,
+    mongo_root_password   = var.mongo_root_password,
+    mongo_address         = var.mongo_address,
+    is_primary            = "false",
+    private_address       = "172.31.255.6",
+    members               = ""
+  }))
 
-#resource "aws_launch_template" "epitweet_ec2_mongodb" {
-#  name_prefix   = "epitweet-mongodb-"
-#  image_id      = "ami-0d3f551818b21ed81"
-#  instance_type = "t2.micro"
-#
-#  key_name = "ssh-key"
-#
-#  user_data = base64encode(templatefile("${path.module}/deploy_db.sh", {
-#    pm2_key               = var.pm2_key,
-#    mongo_initdb_database = var.mongo_initdb_database,
-#    mongo_root_username   = var.mongo_root_username,
-#    mongo_root_password   = var.mongo_root_password,
-#    mongo_address         = var.mongo_address
-#  }))
-#}
+  tags = {
+    Name = "db_instance_2"
+  }
+}
+
+resource "aws_instance" "epitweet_ec2_db_3" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  key_name      = "ssh-key"
+
+  network_interface {
+    network_interface_id = aws_network_interface.epitweet_db_network_interface_2.id
+    device_index         = 0
+  }
+
+  user_data = base64encode(templatefile("${path.module}/deploy_db.sh", {
+    pm2_key               = var.pm2_key,
+    mongo_initdb_database = var.mongo_initdb_database,
+    mongo_root_username   = var.mongo_root_username,
+    mongo_root_password   = var.mongo_root_password,
+    mongo_address         = var.mongo_address,
+    is_primary            = "false",
+    private_address       = "172.31.255.7",
+    members               = ""
+  }))
+
+  tags = {
+    Name = "db_instance_3"
+  }
+}
