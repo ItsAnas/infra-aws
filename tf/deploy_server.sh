@@ -21,5 +21,6 @@ echo MONGO_INITDB_DATABASE=${mongo_initdb_database} >> .env
 echo MONGO_INITDB_ROOT_USERNAME=${mongo_root_username} >> .env
 echo MONGO_INITDB_ROOT_PASSWORD=${mongo_root_password} >> .env
 echo MONGO_ADDRESS=${mongo_address} >> .env
+echo MONGO_REPLICA_SET_NAME=${mongo_replica_set_name} >> .env
 pm2 start src/index.js --name 'Epitweet back'
 

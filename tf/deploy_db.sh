@@ -35,7 +35,7 @@ mkdir -p /opt/mongo
 echo "$REPLICA_SET_KEY" > /opt/mongo/mongod-keyfile
 chmod 400 /opt/mongo/mongod-keyfile
 sudo chown mongodb:mongodb /opt/mongo/mongod-keyfile
-sudo echo -e '\nreplication:\n  replSetName: epitweet-replica-set' >> /etc/mongod.conf
+sudo echo -e '\nreplication:\n  replSetName: ${mongo_replica_set_name}' >> /etc/mongod.conf
 sudo echo -e '\nsecurity:\n  keyFile: /opt/mongo/mongod-keyfile' >> /etc/mongod.conf
 
 # Remote connectivity

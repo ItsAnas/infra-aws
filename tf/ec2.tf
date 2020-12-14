@@ -3,6 +3,9 @@ variable "mongo_initdb_database" {}
 variable "mongo_root_username" {}
 variable "mongo_root_password" {}
 variable "mongo_address" {}
+variable "mongo_replica_set_name" {
+  default = "epitweet-replica-set"
+}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -48,11 +51,12 @@ resource "aws_launch_template" "epitweet_ec2_server" {
   key_name = "ssh-key"
 
   user_data = base64encode(templatefile("${path.module}/deploy_server.sh", {
-    pm2_key               = var.pm2_key,
-    mongo_initdb_database = var.mongo_initdb_database,
-    mongo_root_username   = var.mongo_root_username,
-    mongo_root_password   = var.mongo_root_password,
-    mongo_address         = var.mongo_address
+    pm2_key                = var.pm2_key,
+    mongo_initdb_database  = var.mongo_initdb_database,
+    mongo_root_username    = var.mongo_root_username,
+    mongo_root_password    = var.mongo_root_password,
+    mongo_replica_set_name = var.mongo_replica_set_name,
+    mongo_address          = var.mongo_address
   }))
 
   tags = {
@@ -103,6 +107,7 @@ resource "aws_instance" "epitweet_ec2_db_1" {
     is_primary            = "true",
     private_address       = "172.31.255.5",
     members               = join("\n", ["172.31.255.6", "172.31.255.7"])
+    mongo_replica_set_name = var.mongo_replica_set_name,
   }))
 
   tags = {
@@ -129,6 +134,7 @@ resource "aws_instance" "epitweet_ec2_db_2" {
     is_primary            = "false",
     private_address       = "172.31.255.6",
     members               = ""
+    mongo_replica_set_name = var.mongo_replica_set_name,
   }))
 
   tags = {
@@ -155,6 +161,7 @@ resource "aws_instance" "epitweet_ec2_db_3" {
     is_primary            = "false",
     private_address       = "172.31.255.7",
     members               = ""
+    mongo_replica_set_name = var.mongo_replica_set_name,
   }))
 
   tags = {
