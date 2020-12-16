@@ -22,9 +22,12 @@ const mongoUsername = process.env.MONGO_INITDB_ROOT_USERNAME
 const mongoPassword = process.env.MONGO_INITDB_ROOT_PASSWORD
 const mongoAddress = process.env.MONGO_ADDRESS
 const mongoDatabase = process.env.MONGO_INITDB_DATABASE
+const mongoReplicaSetName = process.env.MONGO_REPLICA_SET_NAME
 
+const mongoReplicaSetOption = mongoReplicaSetName ? `?replicaSet=${mongoReplicaSetName}` : '';
+const connectionString = `mongodb://${mongoUsername}:${mongoPassword}@${mongoAddress}/${mongoDatabase}${mongoReplicaSetOption}`;
 
-mongoose.connect(`mongodb://${mongoUsername}:${mongoPassword}@${mongoAddress}/${mongoDatabase}`, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
