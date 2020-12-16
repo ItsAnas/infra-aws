@@ -14,6 +14,18 @@ You first must define some environnement variables:
 42sh~ export TF_VAR_mongo_address="the ip of the database" # used for access database
 ```
 
+Then, you can start deploying the application:
+
+```bash
+42sh~ cd tf/
+42sh~ terraform init
+42sh~ terraform validate
+42sh~ terraform apply
+```
+
+
+## Misc
+
 TODO:
 
 [X] - Try to deploy two instance of ec2
