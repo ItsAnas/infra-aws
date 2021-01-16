@@ -9,8 +9,8 @@ variable "mongo_replica_set_name" {
 variable "mongo_private_addresses" {
   default = [
     "172.31.255.5",
-    "172.31.255.6",
-    "172.31.255.7"
+    "172.31.255.70",
+    "172.31.255.134"
   ]
 }
 
@@ -71,37 +71,38 @@ resource "aws_launch_template" "epitweet_ec2_server" {
   }
 }
 
-resource "aws_network_interface" "epitweet_db_network_interface_0" {
-  subnet_id   = aws_subnet.epitweet_subnet.id
-  private_ips = [var.mongo_private_addresses[0]]
-  tags = {
-    Name = "primary_network_interface_0"
-  }
-}
-
 resource "aws_network_interface" "epitweet_db_network_interface_1" {
-  subnet_id   = aws_subnet.epitweet_subnet.id
-  private_ips = [var.mongo_private_addresses[1]]
+  subnet_id   = aws_subnet.epitweet_subnet_1.id
+  private_ips = [var.mongo_private_addresses[0]]
   tags = {
     Name = "primary_network_interface_1"
   }
 }
 
 resource "aws_network_interface" "epitweet_db_network_interface_2" {
-  subnet_id   = aws_subnet.epitweet_subnet.id
-  private_ips = [var.mongo_private_addresses[2]]
+  subnet_id   = aws_subnet.epitweet_subnet_2.id
+  private_ips = [var.mongo_private_addresses[1]]
   tags = {
     Name = "primary_network_interface_2"
   }
 }
 
+resource "aws_network_interface" "epitweet_db_network_interface_3" {
+  subnet_id   = aws_subnet.epitweet_subnet_3.id
+  private_ips = [var.mongo_private_addresses[2]]
+  tags = {
+    Name = "primary_network_interface_3"
+  }
+}
+
 resource "aws_instance" "epitweet_ec2_db_1" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  key_name      = "ssh-key"
+  ami               = data.aws_ami.ubuntu.id
+  instance_type     = "t2.micro"
+  key_name          = "ssh-key"
+  availability_zone = "eu-west-3a"
 
   network_interface {
-    network_interface_id = aws_network_interface.epitweet_db_network_interface_0.id
+    network_interface_id = aws_network_interface.epitweet_db_network_interface_1.id
     device_index         = 0
   }
 
@@ -118,17 +119,18 @@ resource "aws_instance" "epitweet_ec2_db_1" {
   }))
 
   tags = {
-    Name = "db_instance"
+    Name = "db_instance_1"
   }
 }
 
 resource "aws_instance" "epitweet_ec2_db_2" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  key_name      = "ssh-key"
+  ami               = data.aws_ami.ubuntu.id
+  instance_type     = "t2.micro"
+  key_name          = "ssh-key"
+  availability_zone = "eu-west-3b"
 
   network_interface {
-    network_interface_id = aws_network_interface.epitweet_db_network_interface_1.id
+    network_interface_id = aws_network_interface.epitweet_db_network_interface_2.id
     device_index         = 0
   }
 
@@ -150,12 +152,13 @@ resource "aws_instance" "epitweet_ec2_db_2" {
 }
 
 resource "aws_instance" "epitweet_ec2_db_3" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  key_name      = "ssh-key"
+  ami               = data.aws_ami.ubuntu.id
+  instance_type     = "t2.micro"
+  key_name          = "ssh-key"
+  availability_zone = "eu-west-3c"
 
   network_interface {
-    network_interface_id = aws_network_interface.epitweet_db_network_interface_2.id
+    network_interface_id = aws_network_interface.epitweet_db_network_interface_3.id
     device_index         = 0
   }
 
