@@ -1,1 +1,2 @@
 environment.auto.tfvars
+.terraform.lock.hcl
